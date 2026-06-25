@@ -3,245 +3,506 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volp — Şifre Sıfırla</title>
+  <title>Volp — Sana Özel Film & Dizi Önerileri</title>
+  <meta name="description" content="Volp, yapay zeka destekli kişiselleştirilmiş film ve dizi öneri uygulaması. Volp ile bir sonraki favori dizini keşfet.">
+  <meta property="og:title" content="Volp — Sana Özel Film & Dizi Önerileri">
+  <meta property="og:description" content="Yapay zeka destekli film ve dizi öneri uygulaması">
+  <meta property="og:url" content="https://volp.app">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #D4AF37;
+      --gold-dark: #b8952e;
+      --bg: #000;
+      --bg2: #0a0a0a;
+      --bg3: #111;
+      --text: #fff;
+      --text2: rgba(255,255,255,0.6);
+      --text3: rgba(255,255,255,0.3);
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #000;
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 4px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--gold);
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 8px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .hero-sub {
+      font-size: clamp(18px, 3vw, 28px);
+      color: var(--text2);
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text3);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 64px;
+    }
+    .btn-store {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gold);
+      color: #000;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .btn-store:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+    }
+    .btn-store-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    .btn-store-outline:hover {
+      background: rgba(212,175,55,0.1);
+      transform: translateY(-2px);
+    }
+    .btn-store-icon { font-size: 24px; }
+    .btn-store-text { display: flex; flex-direction: column; text-align: left; }
+    .btn-store-small { font-size: 11px; font-weight: 400; opacity: 0.8; }
+    .hero-mockup {
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 9/19;
+      background: var(--bg3);
+      border-radius: 40px;
+      border: 2px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      font-size: 80px;
+      box-shadow: 0 40px 80px rgba(212,175,55,0.1), 0 0 0 1px rgba(255,255,255,0.05);
     }
-    .card {
-      background: #111;
+
+    /* FEATURES */
+    .features {
+      padding: 100px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 3px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      text-align: center;
+      color: var(--text2);
+      font-size: 16px;
+      max-width: 480px;
+      margin: 0 auto 64px;
+      line-height: 1.6;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 40px 32px;
-      width: 100%;
-      max-width: 400px;
-      border: 1px solid rgba(255,255,255,0.08);
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
     }
-    .logo {
-      font-size: 32px;
-      font-weight: 900;
-      color: #D4AF37;
-      letter-spacing: 4px;
-      text-align: center;
-      margin-bottom: 8px;
+    .feature-card:hover {
+      border-color: rgba(212,175,55,0.3);
+      transform: translateY(-4px);
     }
-    .subtitle {
-      text-align: center;
-      color: rgba(255,255,255,0.4);
-      font-size: 14px;
-      margin-bottom: 32px;
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: block;
     }
-    .title {
+    .feature-title {
       font-size: 20px;
       font-weight: 700;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+    .feature-desc {
+      color: var(--text2);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* VOLP QUOTE */
+    .volp-section {
+      padding: 100px 20px;
+      background: var(--bg2);
       text-align: center;
     }
-    .label {
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 8px;
-      display: block;
+    .volp-quote {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--bg3);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 24px;
+      padding: 40px;
     }
-    .input {
-      width: 100%;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 12px;
-      padding: 14px 16px;
-      color: #fff;
-      font-size: 15px;
-      margin-bottom: 16px;
-      outline: none;
+    .volp-avatar {
+      width: 64px;
+      height: 64px;
+      background: rgba(212,175,55,0.1);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 20px;
     }
-    .input:focus { border-color: #D4AF37; }
-    .btn {
-      width: 100%;
-      background: #D4AF37;
-      color: #000;
-      border: none;
-      border-radius: 14px;
-      padding: 16px;
-      font-size: 16px;
+    .volp-name {
+      color: var(--gold);
       font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
     }
-    .btn:hover { background: #c49f27; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .msg {
+    .volp-text {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text2);
+      font-style: italic;
+    }
+
+    /* STATS */
+    .stats {
+      padding: 80px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
       text-align: center;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 16px;
+    }
+    .stat-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      color: var(--text2);
       font-size: 14px;
     }
-    .msg.success { background: rgba(22,163,74,0.15); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
-    .msg.error { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
-    .eye-wrap { position: relative; }
-    .eye-btn {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-60%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .back-link {
-      display: block;
+
+    /* CTA */
+    .cta {
+      padding: 100px 20px;
       text-align: center;
-      color: rgba(255,255,255,0.4);
-      font-size: 13px;
-      margin-top: 20px;
-      text-decoration: none;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(212,175,55,0.03) 50%, var(--bg) 100%);
     }
-    .spinner {
+    .cta h2 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      color: var(--text2);
+      margin-bottom: 40px;
+      font-size: 16px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text3);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      color: var(--text3);
+      font-size: 12px;
+    }
+
+    /* COMING SOON BADGE */
+    .coming-soon {
       display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2px solid rgba(0,0,0,0.3);
-      border-top-color: #000;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.3);
+      color: var(--gold);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-left: 8px;
       vertical-align: middle;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .stats { grid-template-columns: 1fr; gap: 16px; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="logo">VOLP</div>
-    <div class="subtitle">Sana özel film & dizi önerileri</div>
 
-    <div id="loading-view">
-      <div class="title">Bağlanıyor...</div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">VOLP</div>
+    <ul class="nav-links">
+      <li><a href="#features">Özellikler</a></li>
+      <li><a href="#volp">Volp Diyor ki</a></li>
+      <li><a href="#download">İndir</a></li>
+      <li><a href="/privacy">Gizlilik</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span>🤖</span>
+      <span>Yapay Zeka Destekli Film & Dizi Önerileri</span>
     </div>
+    <h1>VOLP</h1>
+    <p class="hero-sub">Sana özel film & dizi önerileri</p>
+    <p class="hero-desc">
+      Volp, ne izleyeceğini bilemediğinde yanında olan yapay zeka destekli film ve dizi rehberin.
+      Kişiselleştirilmiş öneriler, Volp'un samimi yorumları ve çok daha fazlası.
+    </p>
+    <div class="hero-btns" id="download">
+      <a href="#" class="btn-store">
+        <span class="btn-store-icon">🍎</span>
+        <span class="btn-store-text">
+          <span class="btn-store-small">Yakında</span>
+          App Store
+        </span>
+      </a>
+      <a href="#" class="btn-store btn-store-outline">
+        <span class="btn-store-icon">▶️</span>
+        <span class="btn-store-text">
+          <span class="btn-store-small">Yakında</span>
+          Google Play
+        </span>
+      </a>
+    </div>
+    <div class="hero-mockup">🎬</div>
+  </section>
 
-    <div id="reset-view" style="display:none">
-      <div class="title">Yeni Şifreni Belirle</div>
-      <label class="label">Yeni Şifre</label>
-      <div class="eye-wrap">
-        <input type="password" id="password" class="input" placeholder="En az 6 karakter" style="margin-bottom:16px;padding-right:48px">
-        <button class="eye-btn" onclick="toggleEye('password', this)">👁️</button>
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="section-label">ÖZELLİKLER</p>
+    <h2 class="section-title">Neden Volp?</h2>
+    <p class="section-desc">Film ve dizi dünyasında kaybolmak yerine, Volp seni doğru içeriğe yönlendirir.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <h3 class="feature-title">AI Destekli Chatbot</h3>
+        <p class="feature-desc">Volp'a ne izlemek istediğini söyle — kiminle, hangi türde, nasıl bir ruh halinde olduğunu anlasın ve sana özel öneriler sunsun.</p>
       </div>
-      <label class="label">Şifreyi Tekrarla</label>
-      <div class="eye-wrap">
-        <input type="password" id="confirm" class="input" placeholder="Şifreyi tekrar gir" style="padding-right:48px">
-        <button class="eye-btn" onclick="toggleEye('confirm', this)">👁️</button>
+      <div class="feature-card">
+        <span class="feature-icon">🎬</span>
+        <h3 class="feature-title">Volp Diyor ki</h3>
+        <p class="feature-desc">Her film ve dizi için Volp'un samimi yorumunu oku. Spoiler vermeden, seni izlemeye ikna eden kısa ve vurucu yazılar.</p>
       </div>
-      <button class="btn" id="submit-btn" onclick="resetPassword()">Şifremi Güncelle</button>
-      <div id="msg"></div>
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3 class="feature-title">Favori Oyuncu & Yönetmen</h3>
+        <p class="feature-desc">Sevdiğin oyuncu ve yönetmenleri takip et, filmografilerini keşfet, detaylı bilgilere ulaş.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📋</span>
+        <h3 class="feature-title">Kişisel Listeler</h3>
+        <p class="feature-desc">İzleme listesi, izlediklerim, beğendiklerim ve beğenmediklerim — tüm listeler bulutta yedeklenir, cihaz değiştirsen bile kaybolmaz.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📺</span>
+        <h3 class="feature-title">Dizi Bölüm Detayları</h3>
+        <p class="feature-desc">Dizi detay sayfasında sezon ve bölüm bilgilerine ulaş, her bölümün özetini oku, yayın tarihini ve puanını gör.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌙</span>
+        <h3 class="feature-title">Açık & Koyu Mod</h3>
+        <p class="feature-desc">Gece veya gündüz, Volp gözlerini yormaz. Açık ve koyu mod seçeneğiyle istediğin görünümde kullan.</p>
+      </div>
     </div>
+  </section>
 
-    <div id="success-view" style="display:none">
-      <div class="title">✅ Şifren Güncellendi!</div>
-      <div class="msg success">Şifreni başarıyla değiştirdin. Artık Volp uygulamasından yeni şifrenle giriş yapabilirsin.</div>
-      <div style="text-align:center;margin-top:24px;font-size:32px">🎬</div>
+  <!-- VOLP QUOTE -->
+  <section class="volp-section" id="volp">
+    <p class="section-label">VOLP DİYOR Kİ</p>
+    <h2 class="section-title" style="margin-bottom:40px">Samimi Yorumlar</h2>
+    <div class="volp-quote">
+      <div class="volp-avatar">🎬</div>
+      <p class="volp-name">Volp — The Shawshank Redemption için</p>
+      <p class="volp-text">
+        "Andy Dufresne haksız yere mahkum edilmiş bir adam. Ama bu film umut hakkında — ve umudun ne kadar güçlü bir silah olduğunu gösteriyor. Son sahneyi izledikten sonra bir süre ekrana bakıp kaldım. 🎬"
+      </p>
     </div>
+  </section>
 
-    <div id="error-view" style="display:none">
-      <div class="title">❌ Link Geçersiz</div>
-      <div class="msg error">Bu şifre sıfırlama linki geçersiz veya süresi dolmuş. Lütfen uygulamadan tekrar şifre sıfırlama talebinde bulun.</div>
+  <!-- STATS -->
+  <div class="stats">
+    <div>
+      <div class="stat-num">1M+</div>
+      <div class="stat-label">Film & Dizi</div>
+    </div>
+    <div>
+      <div class="stat-num">AI</div>
+      <div class="stat-label">Destekli Öneriler</div>
+    </div>
+    <div>
+      <div class="stat-num">%100</div>
+      <div class="stat-label">Kişiselleştirilmiş</div>
     </div>
   </div>
 
-  <script>
-    const SUPABASE_URL = 'https://zilanvsugobnhmbhuwso.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppbGFudnN1Z29ibmhtYmh1d3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5Njk1OTgsImV4cCI6MjA5NzU0NTU5OH0.VrnoxDwH8fpzAp2fczWbAEhqdBmPA6lYPG57y7vLGyU';
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Bir sonraki favori dizini<br>keşfetmeye hazır mısın?</h2>
+    <p>Volp yakında App Store ve Google Play'de!</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-store">
+        <span class="btn-store-icon">🍎</span>
+        <span class="btn-store-text">
+          <span class="btn-store-small">Yakında</span>
+          App Store
+        </span>
+      </a>
+      <a href="#" class="btn-store btn-store-outline">
+        <span class="btn-store-icon">▶️</span>
+        <span class="btn-store-text">
+          <span class="btn-store-small">Yakında</span>
+          Google Play
+        </span>
+      </a>
+    </div>
+  </section>
 
-    let accessToken = null;
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">VOLP</div>
+    <div class="footer-links">
+      <a href="/privacy">Gizlilik Politikası</a>
+      <a href="/terms">Kullanım Şartları</a>
+      <a href="mailto:info@volp.app">İletişim</a>
+    </div>
+    <p class="footer-copy">© 2026 Volp. Tüm hakları saklıdır.</p>
+  </footer>
 
-    function toggleEye(inputId, btn) {
-      const input = document.getElementById(inputId);
-      if (input.type === 'password') {
-        input.type = 'text';
-        btn.textContent = '🙈';
-      } else {
-        input.type = 'password';
-        btn.textContent = '👁️';
-      }
-    }
-
-    function showView(id) {
-      ['loading-view','reset-view','success-view','error-view'].forEach(v => {
-        document.getElementById(v).style.display = v === id ? 'block' : 'none';
-      });
-    }
-
-    function showMsg(text, type) {
-      const el = document.getElementById('msg');
-      el.className = 'msg ' + type;
-      el.textContent = text;
-    }
-
-    // URL'den token al
-    async function init() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      const token = params.get('access_token');
-      const type = params.get('type');
-
-      if (!token || type !== 'recovery') {
-        showView('error-view');
-        return;
-      }
-
-      accessToken = token;
-      showView('reset-view');
-    }
-
-    async function resetPassword() {
-      const password = document.getElementById('password').value;
-      const confirm = document.getElementById('confirm').value;
-
-      if (!password || password.length < 6) {
-        showMsg('Şifre en az 6 karakter olmalı.', 'error'); return;
-      }
-      if (password !== confirm) {
-        showMsg('Şifreler eşleşmiyor.', 'error'); return;
-      }
-
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner"></span>';
-
-      try {
-        const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${accessToken}`
-          },
-          body: JSON.stringify({ password })
-        });
-
-        const data = await res.json();
-
-        if (data.id || data.email) {
-          showView('success-view');
-        } else {
-          btn.disabled = false;
-          btn.textContent = 'Şifremi Güncelle';
-          showMsg(data.message || 'Bir hata oluştu, tekrar deneyin.', 'error');
-        }
-      } catch(e) {
-        btn.disabled = false;
-        btn.textContent = 'Şifremi Güncelle';
-        showMsg('Bağlantı hatası, tekrar deneyin.', 'error');
-      }
-    }
-
-    init();
-  </script>
 </body>
 </html>
