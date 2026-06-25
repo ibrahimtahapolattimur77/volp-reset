@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volp — Şifre Sıfırla</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #111;
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      color: #D4AF37;
+      letter-spacing: 4px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .input {
+      width: 100%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .input:focus { border-color: #D4AF37; }
+    .btn {
+      width: 100%;
+      background: #D4AF37;
+      color: #000;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn:hover { background: #c49f27; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg {
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    .msg.success { background: rgba(22,163,74,0.15); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
+    .msg.error { background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .eye-wrap { position: relative; }
+    .eye-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-60%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      margin-top: 20px;
+      text-decoration: none;
+    }
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">VOLP</div>
+    <div class="subtitle">Sana özel film & dizi önerileri</div>
+
+    <div id="loading-view">
+      <div class="title">Bağlanıyor...</div>
+    </div>
+
+    <div id="reset-view" style="display:none">
+      <div class="title">Yeni Şifreni Belirle</div>
+      <label class="label">Yeni Şifre</label>
+      <div class="eye-wrap">
+        <input type="password" id="password" class="input" placeholder="En az 6 karakter" style="margin-bottom:16px;padding-right:48px">
+        <button class="eye-btn" onclick="toggleEye('password', this)">👁️</button>
+      </div>
+      <label class="label">Şifreyi Tekrarla</label>
+      <div class="eye-wrap">
+        <input type="password" id="confirm" class="input" placeholder="Şifreyi tekrar gir" style="padding-right:48px">
+        <button class="eye-btn" onclick="toggleEye('confirm', this)">👁️</button>
+      </div>
+      <button class="btn" id="submit-btn" onclick="resetPassword()">Şifremi Güncelle</button>
+      <div id="msg"></div>
+    </div>
+
+    <div id="success-view" style="display:none">
+      <div class="title">✅ Şifren Güncellendi!</div>
+      <div class="msg success">Şifreni başarıyla değiştirdin. Artık Volp uygulamasından yeni şifrenle giriş yapabilirsin.</div>
+      <div style="text-align:center;margin-top:24px;font-size:32px">🎬</div>
+    </div>
+
+    <div id="error-view" style="display:none">
+      <div class="title">❌ Link Geçersiz</div>
+      <div class="msg error">Bu şifre sıfırlama linki geçersiz veya süresi dolmuş. Lütfen uygulamadan tekrar şifre sıfırlama talebinde bulun.</div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://zilanvsugobnhmbhuwso.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppbGFudnN1Z29ibmhtYmh1d3NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE5Njk1OTgsImV4cCI6MjA5NzU0NTU5OH0.VrnoxDwH8fpzAp2fczWbAEhqdBmPA6lYPG57y7vLGyU';
+
+    let accessToken = null;
+
+    function toggleEye(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    function showView(id) {
+      ['loading-view','reset-view','success-view','error-view'].forEach(v => {
+        document.getElementById(v).style.display = v === id ? 'block' : 'none';
+      });
+    }
+
+    function showMsg(text, type) {
+      const el = document.getElementById('msg');
+      el.className = 'msg ' + type;
+      el.textContent = text;
+    }
+
+    // URL'den token al
+    async function init() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const token = params.get('access_token');
+      const type = params.get('type');
+
+      if (!token || type !== 'recovery') {
+        showView('error-view');
+        return;
+      }
+
+      accessToken = token;
+      showView('reset-view');
+    }
+
+    async function resetPassword() {
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+
+      if (!password || password.length < 6) {
+        showMsg('Şifre en az 6 karakter olmalı.', 'error'); return;
+      }
+      if (password !== confirm) {
+        showMsg('Şifreler eşleşmiyor.', 'error'); return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await res.json();
+
+        if (data.id || data.email) {
+          showView('success-view');
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Şifremi Güncelle';
+          showMsg(data.message || 'Bir hata oluştu, tekrar deneyin.', 'error');
+        }
+      } catch(e) {
+        btn.disabled = false;
+        btn.textContent = 'Şifremi Güncelle';
+        showMsg('Bağlantı hatası, tekrar deneyin.', 'error');
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
