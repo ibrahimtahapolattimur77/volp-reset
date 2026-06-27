@@ -29,7 +29,6 @@
 
     .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 20px 80px; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); pointer-events: none; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; padding: 6px 16px; font-size: 13px; color: var(--gold); margin-bottom: 32px; }
     .hero h1 { font-size: clamp(48px, 8vw, 96px); font-weight: 900; color: var(--gold); letter-spacing: 8px; margin-bottom: 16px; line-height: 1; }
     .hero-sub { font-size: clamp(18px, 3vw, 28px); color: var(--text2); margin-bottom: 16px; font-weight: 300; }
     .hero-desc { font-size: 16px; color: var(--text3); max-width: 480px; line-height: 1.6; margin-bottom: 48px; }
@@ -42,113 +41,130 @@
     .btn-store-text { display: flex; flex-direction: column; text-align: left; }
     .btn-store-small { font-size: 11px; font-weight: 400; opacity: 0.8; }
 
-    .mockups-scroll-wrapper { width: 100%; overflow-x: auto; padding: 20px 0 40px; scrollbar-width: none; }
-    .mockups-scroll-wrapper::-webkit-scrollbar { display: none; }
-    .mockups-row { display: flex; gap: 20px; justify-content: center; align-items: flex-end; min-width: max-content; padding: 0 40px; }
+    /* SLIDER */
+    .slider-wrapper { width: 100%; max-width: 320px; margin: 0 auto; position: relative; }
+    .slider-track { display: flex; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .slide { min-width: 100%; display: flex; justify-content: center; }
 
-    .phone { width: 200px; background: #0a0a0a; border-radius: 36px; border: 2px solid rgba(255,255,255,0.12); overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04), 0 0 40px rgba(212,175,55,0.08); position: relative; flex-shrink: 0; }
-    .phone.main { width: 230px; transform: translateY(-24px); box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 60px rgba(212,175,55,0.18); border-color: rgba(212,175,55,0.2); }
-    .phone.side { width: 185px; opacity: 0.88; }
-    .phone.small { width: 168px; opacity: 0.75; transform: translateY(12px); }
-    .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 20px; background: #0a0a0a; border-radius: 0 0 16px 16px; z-index: 10; }
+    /* PHONE — tek boyut */
+    .phone { width: 260px; background: #0a0a0a; border-radius: 40px; border: 2px solid rgba(255,255,255,0.14); overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.7), 0 0 60px rgba(212,175,55,0.12); position: relative; }
+    .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 90px; height: 22px; background: #0a0a0a; border-radius: 0 0 18px 18px; z-index: 10; }
 
-    .s-tabbar { display: flex; border-top: 1px solid rgba(255,255,255,0.07); padding: 8px 0 12px; background: #0a0a0a; }
+    /* NAV DOTS */
+    .slider-dots { display: flex; gap: 8px; justify-content: center; margin-top: 20px; }
+    .dot { width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.3s; }
+    .dot.active { width: 24px; background: var(--gold); }
+
+    /* SLIDER ARROWS */
+    .slider-arrows { display: flex; gap: 12px; justify-content: center; margin-top: 14px; }
+    .arrow { width: 36px; height: 36px; border-radius: 18px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,0.6); font-size: 14px; transition: all 0.2s; user-select: none; }
+    .arrow:hover { background: rgba(212,175,55,0.15); border-color: var(--gold); color: var(--gold); }
+
+    /* SCREEN LABEL */
+    .slide-label { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 1px; text-align: center; margin-bottom: 16px; opacity: 0.8; }
+
+    /* TABBAR */
+    .s-tabbar { display: flex; border-top: 1px solid rgba(255,255,255,0.07); padding: 8px 0 14px; background: #0a0a0a; }
     .s-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-    .s-tab-icon { font-size: 14px; }
-    .s-tab-label { font-size: 7px; color: rgba(255,255,255,0.3); }
+    .s-tab-icon { font-size: 16px; }
+    .s-tab-label { font-size: 8px; color: rgba(255,255,255,0.3); }
 
-    .screen-discover { background: #000; }
-    .s-topbar { display: flex; justify-content: space-between; align-items: center; padding: 28px 14px 10px; }
-    .s-logo { font-size: 14px; font-weight: 900; color: #D4AF37; letter-spacing: 3px; }
-    .s-icon-btn { width: 28px; height: 28px; border-radius: 14px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-    .s-section-title { font-size: 10px; font-weight: 700; color: #fff; padding: 0 14px; margin-bottom: 8px; display: flex; justify-content: space-between; }
-    .s-section-title span { color: #D4AF37; font-weight: 400; }
-    .s-movies-row { display: flex; gap: 8px; padding: 0 14px; overflow: hidden; margin-bottom: 14px; }
-    .s-movie-card { flex-shrink: 0; width: 72px; }
-    .s-movie-poster { width: 72px; height: 106px; border-radius: 8px; overflow: hidden; position: relative; margin-bottom: 4px; background: #1a1a1a; }
+    /* SCREEN: KEŞFET */
+    .s-topbar { display: flex; justify-content: space-between; align-items: center; padding: 30px 16px 12px; }
+    .s-logo { font-size: 16px; font-weight: 900; color: #D4AF37; letter-spacing: 3px; }
+    .s-icon-btn { width: 32px; height: 32px; border-radius: 16px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .s-section-title { font-size: 11px; font-weight: 700; color: #fff; padding: 0 16px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    .s-section-title span { color: #D4AF37; font-weight: 400; font-size: 10px; }
+    .s-movies-row { display: flex; gap: 10px; padding: 0 16px; overflow: hidden; margin-bottom: 16px; }
+    .s-movie-card { flex-shrink: 0; width: 78px; }
+    .s-movie-poster { width: 78px; height: 116px; border-radius: 10px; overflow: hidden; position: relative; margin-bottom: 5px; background: #1a1a1a; }
     .s-movie-poster img { width: 100%; height: 100%; object-fit: cover; }
-    .s-imdb { position: absolute; top: 4px; right: 4px; background: #F5C518; border-radius: 3px; padding: 1px 3px; font-size: 7px; font-weight: 900; color: #000; }
-    .s-movie-name { font-size: 8px; color: rgba(255,255,255,0.75); line-height: 1.2; }
+    .s-imdb { position: absolute; top: 4px; right: 4px; background: #F5C518; border-radius: 3px; padding: 1px 4px; font-size: 7px; font-weight: 900; color: #000; }
+    .s-movie-name { font-size: 9px; color: rgba(255,255,255,0.75); line-height: 1.2; }
 
-    .screen-chat { background: #000; }
-    .s-chat-header { display: flex; align-items: center; gap: 8px; padding: 28px 14px 10px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .s-chat-avatar { width: 28px; height: 28px; border-radius: 14px; background: rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; }
-    .s-chat-name { font-size: 11px; font-weight: 700; color: #fff; }
-    .s-chat-sub { font-size: 8px; color: rgba(255,255,255,0.4); }
-    .s-messages { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-    .s-msg-bot { display: flex; gap: 6px; align-items: flex-start; }
-    .s-msg-avatar { width: 20px; height: 20px; border-radius: 10px; background: rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; font-size: 10px; flex-shrink: 0; }
-    .s-bubble-bot { background: rgba(255,255,255,0.08); border-radius: 3px 12px 12px 12px; padding: 7px 10px; max-width: 145px; font-size: 9px; color: rgba(255,255,255,0.8); line-height: 1.4; }
-    .s-bubble-user { background: rgba(212,175,55,0.13); border: 0.5px solid rgba(212,175,55,0.3); border-radius: 12px 3px 12px 12px; padding: 7px 10px; max-width: 130px; align-self: flex-end; font-size: 9px; color: #D4AF37; line-height: 1.4; }
-    .s-rec-card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 7px; display: flex; gap: 7px; margin-left: 26px; }
-    .s-rec-poster { width: 38px; height: 56px; border-radius: 6px; overflow: hidden; flex-shrink: 0; background: #1a1a1a; }
+    /* SCREEN: CHAT */
+    .s-chat-header { display: flex; align-items: center; gap: 10px; padding: 30px 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .s-chat-avatar { width: 32px; height: 32px; border-radius: 16px; background: rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .s-chat-name { font-size: 12px; font-weight: 700; color: #fff; }
+    .s-chat-sub { font-size: 9px; color: rgba(255,255,255,0.4); }
+    .s-messages { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .s-msg-bot { display: flex; gap: 7px; align-items: flex-start; }
+    .s-msg-avatar { width: 22px; height: 22px; border-radius: 11px; background: rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+    .s-bubble-bot { background: rgba(255,255,255,0.08); border-radius: 3px 14px 14px 14px; padding: 8px 11px; max-width: 160px; font-size: 10px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+    .s-bubble-user { background: rgba(212,175,55,0.13); border: 0.5px solid rgba(212,175,55,0.3); border-radius: 14px 3px 14px 14px; padding: 8px 11px; max-width: 150px; align-self: flex-end; font-size: 10px; color: #D4AF37; line-height: 1.4; }
+    .s-rec-card { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 9px; display: flex; gap: 9px; margin-left: 29px; }
+    .s-rec-poster { width: 44px; height: 64px; border-radius: 7px; overflow: hidden; flex-shrink: 0; background: #1a1a1a; }
     .s-rec-poster img { width: 100%; height: 100%; object-fit: cover; }
-    .s-rec-title { font-size: 9px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-    .s-rec-meta { font-size: 8px; color: #D4AF37; margin-bottom: 2px; }
-    .s-rec-why { font-size: 7.5px; color: rgba(255,255,255,0.5); line-height: 1.3; }
+    .s-rec-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .s-rec-meta { font-size: 9px; color: #D4AF37; margin-bottom: 3px; }
+    .s-rec-why { font-size: 8px; color: rgba(255,255,255,0.5); line-height: 1.3; }
 
-    .screen-detail { background: #000; }
-    .s-detail-poster { width: 100%; height: 170px; overflow: hidden; position: relative; background: #1a1a1a; }
+    /* SCREEN: DETAY */
+    .s-detail-poster { width: 100%; height: 190px; overflow: hidden; position: relative; background: #1a1a1a; }
     .s-detail-poster img { width: 100%; height: 100%; object-fit: cover; }
-    .s-detail-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 80px; background: linear-gradient(transparent, #000); }
-    .s-detail-back { position: absolute; top: 28px; left: 14px; width: 28px; height: 28px; border-radius: 14px; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; }
-    .s-detail-content { padding: 0 12px 10px; }
-    .s-detail-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 6px; }
-    .s-detail-meta { display: flex; gap: 5px; margin-bottom: 10px; flex-wrap: wrap; }
-    .s-meta-badge { background: rgba(212,175,55,0.15); border-radius: 10px; padding: 2px 7px; font-size: 8px; color: #D4AF37; font-weight: 600; }
-    .s-detail-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px; }
-    .s-action-btn { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 6px 4px; text-align: center; font-size: 11px; }
+    .s-detail-gradient { position: absolute; bottom: 0; left: 0; right: 0; height: 90px; background: linear-gradient(transparent, #000); }
+    .s-detail-back { position: absolute; top: 30px; left: 16px; width: 32px; height: 32px; border-radius: 16px; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; }
+    .s-detail-content { padding: 0 14px 12px; }
+    .s-detail-title { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 7px; }
+    .s-detail-meta { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+    .s-meta-badge { background: rgba(212,175,55,0.15); border-radius: 10px; padding: 2px 8px; font-size: 9px; color: #D4AF37; font-weight: 600; }
+    .s-detail-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+    .s-action-btn { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 4px; text-align: center; font-size: 13px; }
     .s-action-btn.active { background: rgba(212,175,55,0.18); border: 1px solid rgba(212,175,55,0.4); }
-    .s-action-label { font-size: 7px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .s-action-label { font-size: 8px; color: rgba(255,255,255,0.45); margin-top: 3px; }
     .s-action-btn.active .s-action-label { color: #D4AF37; }
-    .s-volp-box { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 10px; padding: 8px; }
-    .s-volp-header { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; font-size: 8px; font-weight: 700; color: #D4AF37; }
-    .s-volp-text { font-size: 7.5px; color: rgba(255,255,255,0.6); line-height: 1.45; }
+    .s-volp-box { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 10px; }
+    .s-volp-header { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; font-size: 9px; font-weight: 700; color: #D4AF37; }
+    .s-volp-text { font-size: 8.5px; color: rgba(255,255,255,0.6); line-height: 1.5; }
 
-    .screen-profile { background: #000; }
-    .s-profile-top { padding: 28px 14px 14px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .s-avatar { width: 52px; height: 52px; border-radius: 26px; background: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: #fff; margin: 0 auto 8px; }
-    .s-profile-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-    .s-profile-email { font-size: 8px; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
-    .s-stats-row { display: flex; gap: 6px; justify-content: center; }
-    .s-stat { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 6px 10px; text-align: center; }
-    .s-stat-num { font-size: 14px; font-weight: 700; color: #D4AF37; }
-    .s-stat-label { font-size: 7px; color: rgba(255,255,255,0.4); margin-top: 1px; }
-    .s-lists { padding: 8px 14px; }
-    .s-list-title { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .s-list-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .s-list-icon { font-size: 14px; margin-right: 8px; }
-    .s-list-name { font-size: 10px; color: #fff; flex: 1; }
-    .s-list-count { font-size: 9px; color: rgba(255,255,255,0.3); }
+    /* SCREEN: PROFİL */
+    .s-profile-top { padding: 30px 16px 16px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .s-avatar { width: 60px; height: 60px; border-radius: 30px; background: #4f46e5; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; color: #fff; margin: 0 auto 10px; }
+    .s-profile-name { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .s-profile-email { font-size: 9px; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+    .s-stats-row { display: flex; gap: 8px; justify-content: center; }
+    .s-stat { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 14px; text-align: center; }
+    .s-stat-num { font-size: 16px; font-weight: 700; color: #D4AF37; }
+    .s-stat-label { font-size: 8px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .s-lists { padding: 10px 16px; }
+    .s-list-title { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .s-list-row { display: flex; align-items: center; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .s-list-icon { font-size: 15px; margin-right: 10px; }
+    .s-list-name { font-size: 11px; color: #fff; flex: 1; }
+    .s-list-count { font-size: 10px; color: rgba(255,255,255,0.3); }
 
-    .screen-search { background: #000; }
-    .s-search-bar { display: flex; align-items: center; background: rgba(255,255,255,0.08); border-radius: 12px; padding: 8px 12px; gap: 6px; margin-bottom: 8px; }
-    .s-search-input { font-size: 10px; color: rgba(255,255,255,0.5); flex: 1; }
-    .s-filter-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
-    .s-ftab { padding: 4px 10px; border-radius: 14px; font-size: 8px; border: 0.5px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+    /* SCREEN: ARAMA */
+    .s-search-header { padding: 30px 16px 12px; }
+    .s-search-bar { display: flex; align-items: center; background: rgba(255,255,255,0.08); border-radius: 14px; padding: 10px 14px; gap: 8px; margin-bottom: 10px; }
+    .s-search-input { font-size: 11px; color: rgba(255,255,255,0.5); flex: 1; }
+    .s-filter-tabs { display: flex; gap: 7px; margin-bottom: 10px; }
+    .s-ftab { padding: 5px 12px; border-radius: 16px; font-size: 9px; border: 0.5px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
     .s-ftab.active { background: rgba(212,175,55,0.15); border-color: #D4AF37; color: #D4AF37; }
-    .s-search-results { padding: 0 14px; display: flex; flex-direction: column; gap: 8px; }
-    .s-result-row { display: flex; gap: 8px; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 7px; }
-    .s-result-poster { width: 38px; height: 56px; border-radius: 6px; overflow: hidden; flex-shrink: 0; background: #1a1a1a; }
+    .s-search-results { padding: 0 16px; display: flex; flex-direction: column; gap: 9px; }
+    .s-result-row { display: flex; gap: 10px; background: rgba(255,255,255,0.04); border-radius: 12px; padding: 9px; }
+    .s-result-poster { width: 44px; height: 64px; border-radius: 7px; overflow: hidden; flex-shrink: 0; background: #1a1a1a; }
     .s-result-poster img { width: 100%; height: 100%; object-fit: cover; }
-    .s-result-title { font-size: 9px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-    .s-result-meta { font-size: 8px; color: #D4AF37; margin-bottom: 2px; }
-    .s-result-overview { font-size: 7px; color: rgba(255,255,255,0.4); line-height: 1.3; }
-    .s-type-badge { display: inline-block; background: rgba(212,175,55,0.12); border-radius: 4px; padding: 1px 4px; font-size: 7px; color: #D4AF37; font-weight: 600; }
+    .s-result-title { font-size: 10px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+    .s-result-meta { font-size: 9px; color: #D4AF37; margin-bottom: 3px; }
+    .s-result-overview { font-size: 8px; color: rgba(255,255,255,0.4); line-height: 1.3; }
+    .s-type-badge { display: inline-block; background: rgba(212,175,55,0.12); border-radius: 4px; padding: 1px 5px; font-size: 8px; color: #D4AF37; font-weight: 600; }
 
-    .screen-filter { background: #111; border-radius: 20px 20px 0 0; }
-    .s-filter-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 14px 10px; }
-    .s-filter-title { font-size: 13px; font-weight: 700; color: #fff; }
-    .s-filter-close { width: 24px; height: 24px; border-radius: 12px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
-    .s-filter-section { padding: 0 14px; margin-bottom: 10px; }
-    .s-filter-label { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-    .s-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-    .s-chip { padding: 4px 10px; border-radius: 14px; font-size: 8px; border: 0.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
+    /* SCREEN: FİLTRELEME */
+    .screen-filter-top { background: #000; padding: 22px 16px 10px; }
+    .screen-filter { background: #111; border-radius: 22px 22px 0 0; }
+    .s-filter-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 16px 12px; }
+    .s-filter-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .s-filter-close { width: 28px; height: 28px; border-radius: 14px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; }
+    .s-filter-section { padding: 0 16px; margin-bottom: 12px; }
+    .s-filter-label { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 7px; }
+    .s-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .s-chip { padding: 5px 12px; border-radius: 16px; font-size: 9px; border: 0.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); }
     .s-chip.on { background: rgba(212,175,55,0.12); border-color: #D4AF37; color: #D4AF37; font-weight: 600; }
-    .s-filter-btns { display: flex; gap: 8px; padding: 10px 14px 14px; }
-    .s-filter-reset { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 8px; text-align: center; font-size: 9px; color: rgba(255,255,255,0.5); }
-    .s-filter-apply { flex: 2; background: #D4AF37; border-radius: 10px; padding: 8px; text-align: center; font-size: 9px; font-weight: 700; color: #000; }
+    .s-filter-btns { display: flex; gap: 10px; padding: 12px 16px 16px; }
+    .s-filter-reset { flex: 1; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 10px; text-align: center; font-size: 10px; color: rgba(255,255,255,0.5); }
+    .s-filter-apply { flex: 2; background: #D4AF37; border-radius: 12px; padding: 10px; text-align: center; font-size: 10px; font-weight: 700; color: #000; }
 
+    /* FEATURES */
     .features { padding: 100px 20px; max-width: 1100px; margin: 0 auto; }
     .section-label { text-align: center; font-size: 13px; color: var(--gold); letter-spacing: 3px; font-weight: 600; margin-bottom: 16px; }
     .section-title { text-align: center; font-size: clamp(28px, 5vw, 48px); font-weight: 800; margin-bottom: 16px; }
@@ -160,11 +176,17 @@
     .feature-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
     .feature-desc { color: var(--text2); font-size: 14px; line-height: 1.6; }
 
+    /* VOLP QUOTES */
     .volp-section { padding: 100px 20px; background: var(--bg2); text-align: center; }
-    .volp-quote { max-width: 680px; margin: 0 auto; background: var(--bg3); border: 1px solid rgba(212,175,55,0.2); border-radius: 24px; padding: 40px; }
-    .volp-avatar { width: 64px; height: 64px; background: rgba(212,175,55,0.1); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; }
-    .volp-name { color: var(--gold); font-weight: 700; font-size: 14px; margin-bottom: 16px; }
-    .volp-text { font-size: 18px; line-height: 1.7; color: var(--text2); font-style: italic; }
+    .volp-quotes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+    .volp-quote { background: var(--bg3); border: 1px solid rgba(212,175,55,0.2); border-radius: 24px; padding: 32px; text-align: left; }
+    .volp-quote-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .volp-avatar { width: 48px; height: 48px; background: rgba(212,175,55,0.1); border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .volp-movie-poster { width: 48px; height: 70px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #1a1a1a; }
+    .volp-movie-poster img { width: 100%; height: 100%; object-fit: cover; }
+    .volp-name { color: var(--gold); font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+    .volp-year { color: var(--text3); font-size: 11px; }
+    .volp-text { font-size: 15px; line-height: 1.7; color: var(--text2); font-style: italic; }
 
     .stats { padding: 80px 20px; max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
     .stat-num { font-size: 48px; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
@@ -201,7 +223,6 @@
 </nav>
 
 <section class="hero">
-  <div class="hero-badge"><span>🤖</span><span>Yapay Zeka Destekli Film & Dizi Önerileri</span></div>
   <h1>VOLP</h1>
   <p class="hero-sub">Sana özel film & dizi önerileri</p>
   <p class="hero-desc">Volp, ne izleyeceğini bilemediğinde yanında olan yapay zeka destekli film ve dizi rehberin. Kişiselleştirilmiş öneriler, Volp'un samimi yorumları ve çok daha fazlası.</p>
@@ -216,64 +237,48 @@
     </a>
   </div>
 
-  <div class="mockups-scroll-wrapper">
-    <div class="mockups-row">
+  <!-- SLIDER -->
+  <div id="slideLabel" class="slide-label">🧭 Keşfet</div>
+  <div class="slider-wrapper">
+    <div class="slider-track" id="sliderTrack">
 
-      <!-- 1. KEŞFET -->
-      <div class="phone small">
-        <div class="phone-notch"></div>
-        <div class="screen-discover">
-          <div class="s-topbar">
-            <div class="s-icon-btn">🔍</div>
-            <div class="s-logo">VOLP</div>
-            <div class="s-icon-btn">🔔</div>
-          </div>
-          <div style="padding:0 0 6px;">
-            <div class="s-section-title">⭐ Volp Öneriyor <span>›</span></div>
+      <!-- SLIDE 1: KEŞFET -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div style="background:#000;">
+            <div class="s-topbar">
+              <div class="s-icon-btn">🔍</div>
+              <div class="s-logo">VOLP</div>
+              <div class="s-icon-btn">🔔</div>
+            </div>
+            <div class="s-section-title">⭐ Volp Öneriyor <span>Tümü ›</span></div>
             <div class="s-movies-row">
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="Shawshank">
-                  <div class="s-imdb">★9.3</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="Shawshank"><div class="s-imdb">★9.3</div></div>
                 <div class="s-movie-name">Shawshank</div>
               </div>
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-                  <div class="s-imdb">★8.7</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar"><div class="s-imdb">★8.7</div></div>
                 <div class="s-movie-name">Interstellar</div>
               </div>
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite">
-                  <div class="s-imdb">★8.5</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite"><div class="s-imdb">★8.5</div></div>
                 <div class="s-movie-name">Parasite</div>
               </div>
             </div>
-            <div class="s-section-title">🔥 En Çok Beğenilenler <span>›</span></div>
+            <div class="s-section-title">🔥 En Çok Beğenilenler <span>Tümü ›</span></div>
             <div class="s-movies-row">
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Dark Knight">
-                  <div class="s-imdb">★9.0</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Dark Knight"><div class="s-imdb">★9.0</div></div>
                 <div class="s-movie-name">Dark Knight</div>
               </div>
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" alt="Inception">
-                  <div class="s-imdb">★8.8</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" alt="Inception"><div class="s-imdb">★8.8</div></div>
                 <div class="s-movie-name">Inception</div>
               </div>
               <div class="s-movie-card">
-                <div class="s-movie-poster">
-                  <img src="https://image.tmdb.org/t/p/w185/3bhkrj58Vtu7enYsLegHnDmni69.jpg" alt="Godfather">
-                  <div class="s-imdb">★9.2</div>
-                </div>
+                <div class="s-movie-poster"><img src="https://image.tmdb.org/t/p/w185/3bhkrj58Vtu7enYsLegHnDmni69.jpg" alt="Godfather"><div class="s-imdb">★9.2</div></div>
                 <div class="s-movie-name">Godfather</div>
               </div>
             </div>
@@ -286,41 +291,43 @@
         </div>
       </div>
 
-      <!-- 2. CHAT -->
-      <div class="phone side">
-        <div class="phone-notch"></div>
-        <div class="screen-chat">
-          <div class="s-chat-header">
-            <div class="s-chat-avatar">🎬</div>
-            <div>
-              <div class="s-chat-name">Film / Dizi Asistanı</div>
-              <div class="s-chat-sub">Sana özel öneriler</div>
-            </div>
-          </div>
-          <div class="s-messages">
-            <div class="s-msg-bot">
-              <div class="s-msg-avatar">🎬</div>
-              <div class="s-bubble-bot">Hey! Ben Volp 🎬 sana mükemmel filmi bulmak benim işim!</div>
-            </div>
-            <div class="s-bubble-user">Partnerimle romantik ama klişe olmayan bir film istiyorum ❤️</div>
-            <div class="s-msg-bot">
-              <div class="s-msg-avatar">🎬</div>
-              <div class="s-bubble-bot">Mükemmel! İşte sizi ikisini de mutlu edecek önerilerim 😏</div>
-            </div>
-            <div class="s-rec-card">
-              <div class="s-rec-poster"><img src="https://image.tmdb.org/t/p/w185/5MwkWH9tYHv3mV9OdYTMR5qreIb.jpg" alt="Eternal Sunshine"></div>
+      <!-- SLIDE 2: CHAT -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div style="background:#000;">
+            <div class="s-chat-header">
+              <div class="s-chat-avatar">🎬</div>
               <div>
-                <div class="s-rec-title">Eternal Sunshine</div>
-                <div class="s-rec-meta">★ 8.3 · 2004</div>
-                <div class="s-rec-why">Aşkı farklı bir gözle anlatan zihin büken film.</div>
+                <div class="s-chat-name">Film / Dizi Asistanı</div>
+                <div class="s-chat-sub">Sana özel öneriler</div>
               </div>
             </div>
-            <div class="s-rec-card">
-              <div class="s-rec-poster"><img src="https://image.tmdb.org/t/p/w185/iOPMsAfRBkCqWoLUfBkHPHkEqxv.jpg" alt="Before Sunrise"></div>
-              <div>
-                <div class="s-rec-title">Before Sunrise</div>
-                <div class="s-rec-meta">★ 8.1 · 1995</div>
-                <div class="s-rec-why">Tek gecelik aşk, klişesiz ve gerçekçi.</div>
+            <div class="s-messages">
+              <div class="s-msg-bot">
+                <div class="s-msg-avatar">🎬</div>
+                <div class="s-bubble-bot">Hey! Ben Volp 🎬 sana mükemmel filmi bulmak benim işim!</div>
+              </div>
+              <div class="s-bubble-user">Partnerimle romantik ama klişe olmayan bir film ❤️</div>
+              <div class="s-msg-bot">
+                <div class="s-msg-avatar">🎬</div>
+                <div class="s-bubble-bot">Mükemmel! İşte ikinizi de mutlu edecek önerilerim 😏</div>
+              </div>
+              <div class="s-rec-card">
+                <div class="s-rec-poster"><img src="https://image.tmdb.org/t/p/w185/5MwkWH9tYHv3mV9OdYTMR5qreIb.jpg" alt="Eternal Sunshine"></div>
+                <div>
+                  <div class="s-rec-title">Eternal Sunshine</div>
+                  <div class="s-rec-meta">★ 8.3 · 2004</div>
+                  <div class="s-rec-why">Aşkı farklı bir gözle anlatan zihin büken film.</div>
+                </div>
+              </div>
+              <div class="s-rec-card">
+                <div class="s-rec-poster"><img src="https://image.tmdb.org/t/p/w185/iOPMsAfRBkCqWoLUfBkHPHkEqxv.jpg" alt="Before Sunrise"></div>
+                <div>
+                  <div class="s-rec-title">Before Sunrise</div>
+                  <div class="s-rec-meta">★ 8.1 · 1995</div>
+                  <div class="s-rec-why">Tek gecelik aşk, klişesiz ve gerçekçi.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -332,32 +339,34 @@
         </div>
       </div>
 
-      <!-- 3. FİLM DETAY (ANA) -->
-      <div class="phone main">
-        <div class="phone-notch"></div>
-        <div class="screen-detail">
-          <div class="s-detail-poster">
-            <img src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
-            <div class="s-detail-gradient"></div>
-            <div class="s-detail-back">←</div>
-          </div>
-          <div class="s-detail-content">
-            <div class="s-detail-title">Interstellar</div>
-            <div class="s-detail-meta">
-              <div class="s-meta-badge">2014</div>
-              <div class="s-meta-badge">★ 8.7</div>
-              <div class="s-meta-badge">169 dk</div>
-              <div class="s-meta-badge">Sci-Fi</div>
+      <!-- SLIDE 3: FİLM DETAY -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div style="background:#000;">
+            <div class="s-detail-poster">
+              <img src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar">
+              <div class="s-detail-gradient"></div>
+              <div class="s-detail-back">←</div>
             </div>
-            <div class="s-detail-actions">
-              <div class="s-action-btn">🔖<div class="s-action-label">Listele</div></div>
-              <div class="s-action-btn active">✅<div class="s-action-label">İzlendi</div></div>
-              <div class="s-action-btn active">👍<div class="s-action-label">Beğenildi</div></div>
-              <div class="s-action-btn">👎<div class="s-action-label">Beğenme</div></div>
-            </div>
-            <div class="s-volp-box">
-              <div class="s-volp-header">🎬 Volp bu film hakkında şöyle düşünüyor:</div>
-              <div class="s-volp-text">Uzay, zaman ve bir babanın sevgisi. Bu film sizi hem ağlatacak hem de evrenin büyüklüğü karşısında küçük hissettirecek. Son sahne inanılmaz. ✨</div>
+            <div class="s-detail-content">
+              <div class="s-detail-title">Interstellar</div>
+              <div class="s-detail-meta">
+                <div class="s-meta-badge">2014</div>
+                <div class="s-meta-badge">★ 8.7</div>
+                <div class="s-meta-badge">169 dk</div>
+                <div class="s-meta-badge">Sci-Fi</div>
+              </div>
+              <div class="s-detail-actions">
+                <div class="s-action-btn">🔖<div class="s-action-label">Listele</div></div>
+                <div class="s-action-btn active">✅<div class="s-action-label">İzlendi</div></div>
+                <div class="s-action-btn active">👍<div class="s-action-label">Beğenildi</div></div>
+                <div class="s-action-btn">👎<div class="s-action-label">Beğenme</div></div>
+              </div>
+              <div class="s-volp-box">
+                <div class="s-volp-header">🎬 Volp bu film hakkında şöyle düşünüyor:</div>
+                <div class="s-volp-text">Uzay, zaman ve bir babanın sevgisi. Bu film sizi hem ağlatacak hem de evrenin büyüklüğü karşısında küçük hissettirecek. Son sahne inanılmaz. ✨</div>
+              </div>
             </div>
           </div>
           <div class="s-tabbar">
@@ -368,30 +377,32 @@
         </div>
       </div>
 
-      <!-- 4. PROFİL -->
-      <div class="phone side">
-        <div class="phone-notch"></div>
-        <div class="screen-profile">
-          <div class="s-profile-top">
-            <div class="s-avatar">T</div>
-            <div class="s-profile-name">tahapolat</div>
-            <div class="s-profile-email">taha@gmail.com</div>
-            <div class="s-stats-row">
-              <div class="s-stat"><div class="s-stat-num">24</div><div class="s-stat-label">İzlendi</div></div>
-              <div class="s-stat"><div class="s-stat-num">12</div><div class="s-stat-label">Listede</div></div>
-              <div class="s-stat"><div class="s-stat-num">18</div><div class="s-stat-label">Beğenildi</div></div>
+      <!-- SLIDE 4: PROFİL -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div style="background:#000;">
+            <div class="s-profile-top">
+              <div class="s-avatar">T</div>
+              <div class="s-profile-name">tahapolat</div>
+              <div class="s-profile-email">taha@gmail.com</div>
+              <div class="s-stats-row">
+                <div class="s-stat"><div class="s-stat-num">24</div><div class="s-stat-label">İzlendi</div></div>
+                <div class="s-stat"><div class="s-stat-num">12</div><div class="s-stat-label">Listede</div></div>
+                <div class="s-stat"><div class="s-stat-num">18</div><div class="s-stat-label">Beğenildi</div></div>
+              </div>
             </div>
-          </div>
-          <div class="s-lists">
-            <div class="s-list-title">Filmlerim</div>
-            <div class="s-list-row"><span class="s-list-icon">🔖</span><span class="s-list-name">İzleme Listem</span><span class="s-list-count">12 ›</span></div>
-            <div class="s-list-row"><span class="s-list-icon">✅</span><span class="s-list-name">İzlediklerim</span><span class="s-list-count">24 ›</span></div>
-            <div class="s-list-row"><span class="s-list-icon">👍</span><span class="s-list-name">Beğendiklerim</span><span class="s-list-count">18 ›</span></div>
-            <div class="s-list-row"><span class="s-list-icon">⭐</span><span class="s-list-name">Favori Oyuncular</span><span class="s-list-count">5 ›</span></div>
-            <div class="s-list-row"><span class="s-list-icon">🎬</span><span class="s-list-name">Favori Yönetmenler</span><span class="s-list-count">3 ›</span></div>
-            <div class="s-list-title" style="margin-top:8px;">Ayarlar</div>
-            <div class="s-list-row"><span class="s-list-icon">🌙</span><span class="s-list-name">Koyu Mod</span><div style="width:28px;height:16px;border-radius:8px;background:#D4AF37;display:flex;align-items:center;padding:2px;justify-content:flex-end;"><div style="width:12px;height:12px;border-radius:6px;background:#fff;"></div></div></div>
-            <div class="s-list-row"><span class="s-list-icon">🔐</span><span class="s-list-name">Şifre Değiştir</span><span class="s-list-count">›</span></div>
+            <div class="s-lists">
+              <div class="s-list-title">Filmlerim</div>
+              <div class="s-list-row"><span class="s-list-icon">🔖</span><span class="s-list-name">İzleme Listem</span><span class="s-list-count">12 ›</span></div>
+              <div class="s-list-row"><span class="s-list-icon">✅</span><span class="s-list-name">İzlediklerim</span><span class="s-list-count">24 ›</span></div>
+              <div class="s-list-row"><span class="s-list-icon">👍</span><span class="s-list-name">Beğendiklerim</span><span class="s-list-count">18 ›</span></div>
+              <div class="s-list-row"><span class="s-list-icon">⭐</span><span class="s-list-name">Favori Oyuncular</span><span class="s-list-count">5 ›</span></div>
+              <div class="s-list-row"><span class="s-list-icon">🎬</span><span class="s-list-name">Favori Yönetmenler</span><span class="s-list-count">3 ›</span></div>
+              <div class="s-list-title" style="margin-top:10px;">Ayarlar</div>
+              <div class="s-list-row"><span class="s-list-icon">🌙</span><span class="s-list-name">Koyu Mod</span><div style="width:32px;height:18px;border-radius:9px;background:#D4AF37;display:flex;align-items:center;padding:3px;justify-content:flex-end;"><div style="width:12px;height:12px;border-radius:6px;background:#fff;"></div></div></div>
+              <div class="s-list-row"><span class="s-list-icon">🔐</span><span class="s-list-name">Şifre Değiştir</span><span class="s-list-count">›</span></div>
+            </div>
           </div>
           <div class="s-tabbar">
             <div class="s-tab"><div class="s-tab-icon">🧭</div><div class="s-tab-label">Keşfet</div></div>
@@ -401,53 +412,55 @@
         </div>
       </div>
 
-      <!-- 5. ARAMA -->
-      <div class="phone small">
-        <div class="phone-notch"></div>
-        <div class="screen-search">
-          <div style="padding: 28px 14px 10px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-              <div style="font-size:9px;color:rgba(255,255,255,0.4);">←</div>
-              <div style="font-size:11px;font-weight:700;color:#fff;">Film / Dizi Ara</div>
-              <div style="width:16px;"></div>
+      <!-- SLIDE 5: ARAMA -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div style="background:#000;">
+            <div class="s-search-header">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <div style="font-size:10px;color:rgba(255,255,255,0.4);">←</div>
+                <div style="font-size:13px;font-weight:700;color:#fff;">Film / Dizi Ara</div>
+                <div style="width:18px;"></div>
+              </div>
+              <div class="s-filter-tabs">
+                <div class="s-ftab active">🎬 Tümü</div>
+                <div class="s-ftab">🎥 Film</div>
+                <div class="s-ftab">📺 Dizi</div>
+              </div>
+              <div class="s-search-bar">
+                <span style="font-size:12px;color:rgba(255,255,255,0.3);">🔍</span>
+                <div class="s-search-input">Film veya dizi ara...</div>
+              </div>
             </div>
-            <div class="s-filter-tabs">
-              <div class="s-ftab active">🎬 Tümü</div>
-              <div class="s-ftab">🎥 Film</div>
-              <div class="s-ftab">📺 Dizi</div>
-            </div>
-            <div class="s-search-bar">
-              <span style="font-size:10px;color:rgba(255,255,255,0.3);">🔍</span>
-              <div class="s-search-input">Film veya dizi ara...</div>
+            <div class="s-search-results">
+              <div class="s-result-row">
+                <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Dark Knight"></div>
+                <div style="flex:1;">
+                  <div class="s-result-title">The Dark Knight</div>
+                  <div class="s-result-meta">2008 · ★ 9.0 <span class="s-type-badge">🎬 Film</span></div>
+                  <div class="s-result-overview">Batman, Gotham'ı Joker'den korumak için her şeyini riske atar.</div>
+                </div>
+              </div>
+              <div class="s-result-row">
+                <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" alt="Inception"></div>
+                <div style="flex:1;">
+                  <div class="s-result-title">Inception</div>
+                  <div class="s-result-meta">2010 · ★ 8.8 <span class="s-type-badge">🎬 Film</span></div>
+                  <div class="s-result-overview">Rüyaların içine girerek fikir çalmak üzerine kurulu gerilim.</div>
+                </div>
+              </div>
+              <div class="s-result-row">
+                <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite"></div>
+                <div style="flex:1;">
+                  <div class="s-result-title">Parasite</div>
+                  <div class="s-result-meta">2019 · ★ 8.5 <span class="s-type-badge">🎬 Film</span></div>
+                  <div class="s-result-overview">Sınıf çatışmasını mizah ve gerilimle anlatan Kore yapımı.</div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="s-search-results">
-            <div class="s-result-row">
-              <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Dark Knight"></div>
-              <div style="flex:1;">
-                <div class="s-result-title">The Dark Knight</div>
-                <div class="s-result-meta">2008 · ★ 9.0 <span class="s-type-badge">🎬 Film</span></div>
-                <div class="s-result-overview">Batman, Gotham'ı Joker'den korumak için her şeyini riske atar.</div>
-              </div>
-            </div>
-            <div class="s-result-row">
-              <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" alt="Inception"></div>
-              <div style="flex:1;">
-                <div class="s-result-title">Inception</div>
-                <div class="s-result-meta">2010 · ★ 8.8 <span class="s-type-badge">🎬 Film</span></div>
-                <div class="s-result-overview">Rüyaların içine girerek fikir çalmak üzerine kurulu gerilim.</div>
-              </div>
-            </div>
-            <div class="s-result-row">
-              <div class="s-result-poster"><img src="https://image.tmdb.org/t/p/w185/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite"></div>
-              <div style="flex:1;">
-                <div class="s-result-title">Parasite</div>
-                <div class="s-result-meta">2019 · ★ 8.5 <span class="s-type-badge">🎬 Film</span></div>
-                <div class="s-result-overview">Sınıf çatışmasını mizah ve gerilimle anlatan Kore yapımı.</div>
-              </div>
-            </div>
-          </div>
-          <div class="s-tabbar" style="margin-top:8px;">
+          <div class="s-tabbar">
             <div class="s-tab"><div class="s-tab-icon">🧭</div><div class="s-tab-label">Keşfet</div></div>
             <div class="s-tab"><div class="s-tab-icon">💬</div><div class="s-tab-label">Chat</div></div>
             <div class="s-tab"><div class="s-tab-icon">👤</div><div class="s-tab-label">Profil</div></div>
@@ -455,63 +468,71 @@
         </div>
       </div>
 
-      <!-- 6. FİLTRELEME -->
-      <div class="phone small">
-        <div class="phone-notch"></div>
-        <div style="background:#000;padding:20px 14px 8px;">
-          <div class="s-section-title" style="margin-bottom:10px;">💥 Aksiyon <span style="color:rgba(255,255,255,0.3);font-size:8px;">⚙️ Filtrele (2)</span></div>
-          <div style="display:flex;gap:5px;margin-bottom:8px;">
-            <div style="flex:1;background:rgba(212,175,55,0.12);border:0.5px solid #D4AF37;border-radius:14px;padding:6px 4px;text-align:center;font-size:8px;color:#D4AF37;font-weight:700;">🔥 Popüler</div>
-            <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:6px 4px;text-align:center;font-size:8px;color:rgba(255,255,255,0.5);">⭐ Puan</div>
-            <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:6px 4px;text-align:center;font-size:8px;color:rgba(255,255,255,0.5);">🆕 Yeni</div>
-          </div>
-          <div style="display:flex;gap:5px;">
-            <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:5px;text-align:center;font-size:8px;color:rgba(255,255,255,0.5);">🎥 Film</div>
-            <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:5px;text-align:center;font-size:8px;color:rgba(255,255,255,0.5);">📺 Dizi</div>
-          </div>
-        </div>
-        <div class="screen-filter">
-          <div class="s-filter-header">
-            <div class="s-filter-title">Filtrele</div>
-            <div class="s-filter-close">✕</div>
-          </div>
-          <div class="s-filter-section">
-            <div class="s-filter-label">IMDb Puanı</div>
-            <div class="s-chips">
-              <div class="s-chip">Tümü</div>
-              <div class="s-chip on">7+</div>
-              <div class="s-chip">8+</div>
-              <div class="s-chip">9+</div>
+      <!-- SLIDE 6: FİLTRELEME -->
+      <div class="slide">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="screen-filter-top">
+            <div class="s-section-title" style="margin-bottom:12px;">💥 Aksiyon <span>⚙️ Filtrele (2)</span></div>
+            <div style="display:flex;gap:6px;margin-bottom:10px;">
+              <div style="flex:1;background:rgba(212,175,55,0.12);border:0.5px solid #D4AF37;border-radius:16px;padding:7px 4px;text-align:center;font-size:9px;color:#D4AF37;font-weight:700;">🔥 Popüler</div>
+              <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:7px 4px;text-align:center;font-size:9px;color:rgba(255,255,255,0.5);">⭐ Puan</div>
+              <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:7px 4px;text-align:center;font-size:9px;color:rgba(255,255,255,0.5);">🆕 Yeni</div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.5);">🎥 Film</div>
+              <div style="flex:1;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);border-radius:16px;padding:6px;text-align:center;font-size:9px;color:rgba(255,255,255,0.5);">📺 Dizi</div>
             </div>
           </div>
-          <div class="s-filter-section">
-            <div class="s-filter-label">Süre</div>
-            <div class="s-chips">
-              <div class="s-chip">Tümü</div>
-              <div class="s-chip">60 dk altı</div>
-              <div class="s-chip on">~90 dk</div>
-              <div class="s-chip">2 saat+</div>
+          <div class="screen-filter">
+            <div class="s-filter-header">
+              <div class="s-filter-title">Filtrele</div>
+              <div class="s-filter-close">✕</div>
             </div>
-          </div>
-          <div class="s-filter-section">
-            <div class="s-filter-label">Yıl</div>
-            <div class="s-chips">
-              <div class="s-chip">Tümü</div>
-              <div class="s-chip on">2020+</div>
-              <div class="s-chip">2010+</div>
-              <div class="s-chip">2000+</div>
-              <div class="s-chip">Klasik</div>
+            <div class="s-filter-section">
+              <div class="s-filter-label">IMDb Puanı</div>
+              <div class="s-chips">
+                <div class="s-chip">Tümü</div>
+                <div class="s-chip on">7+</div>
+                <div class="s-chip">8+</div>
+                <div class="s-chip">9+</div>
+              </div>
             </div>
-          </div>
-          <div class="s-filter-btns">
-            <div class="s-filter-reset">Sıfırla</div>
-            <div class="s-filter-apply">Uygula</div>
+            <div class="s-filter-section">
+              <div class="s-filter-label">Süre</div>
+              <div class="s-chips">
+                <div class="s-chip">Tümü</div>
+                <div class="s-chip">60 dk altı</div>
+                <div class="s-chip on">~90 dk</div>
+                <div class="s-chip">2 saat+</div>
+              </div>
+            </div>
+            <div class="s-filter-section">
+              <div class="s-filter-label">Yıl</div>
+              <div class="s-chips">
+                <div class="s-chip">Tümü</div>
+                <div class="s-chip on">2020+</div>
+                <div class="s-chip">2010+</div>
+                <div class="s-chip">2000+</div>
+                <div class="s-chip">Klasik</div>
+              </div>
+            </div>
+            <div class="s-filter-btns">
+              <div class="s-filter-reset">Sıfırla</div>
+              <div class="s-filter-apply">Uygula</div>
+            </div>
           </div>
         </div>
       </div>
 
-    </div>
+    </div><!-- /slider-track -->
+  </div><!-- /slider-wrapper -->
+
+  <div class="slider-arrows">
+    <div class="arrow" onclick="changeSlide(-1)">←</div>
+    <div class="arrow" onclick="changeSlide(1)">→</div>
   </div>
+  <div class="slider-dots" id="sliderDots"></div>
 </section>
 
 <!-- FEATURES -->
@@ -529,13 +550,66 @@
   </div>
 </section>
 
+<!-- VOLP DİYOR Kİ -->
 <section class="volp-section" id="volp">
   <p class="section-label">VOLP DİYOR Kİ</p>
-  <h2 class="section-title" style="margin-bottom:40px">Samimi Yorumlar</h2>
-  <div class="volp-quote">
-    <div class="volp-avatar">🎬</div>
-    <p class="volp-name">Volp — The Shawshank Redemption için</p>
-    <p class="volp-text">"Andy Dufresne haksız yere mahkum edilmiş bir adam. Ama bu film umut hakkında — ve umudun ne kadar güçlü bir silah olduğunu gösteriyor. Son sahneyi izledikten sonra bir süre ekrana bakıp kaldım. 🎬"</p>
+  <h2 class="section-title" style="margin-bottom:48px">Samimi Yorumlar</h2>
+  <div class="volp-quotes-grid">
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="Shawshank"></div>
+        <div><div class="volp-name">The Shawshank Redemption</div><div class="volp-year">1994 · Drama</div></div>
+      </div>
+      <p class="volp-text">"Andy Dufresne haksız yere mahkum edilmiş bir adam. Ama bu film umut hakkında — ve umudun ne kadar güçlü bir silah olduğunu gösteriyor. Son sahneyi izledikten sonra bir süre ekrana bakıp kaldım. 🎬"</p>
+    </div>
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg" alt="Interstellar"></div>
+        <div><div class="volp-name">Interstellar</div><div class="volp-year">2014 · Sci-Fi</div></div>
+      </div>
+      <p class="volp-text">"Uzay, zaman ve bir babanın sevgisi. Bu film sizi hem ağlatacak hem de evrenin büyüklüğü karşısında küçük hissettirecek. Nolan bu sefer gerçekten kendini aştı. ✨"</p>
+    </div>
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg" alt="Inception"></div>
+        <div><div class="volp-name">Inception</div><div class="volp-year">2010 · Gerilim</div></div>
+      </div>
+      <p class="volp-text">"Rüyanın içinde rüya. İzlerken kafanız karışacak, bitince hâlâ düşüneceksiniz. Film bittikten sonra arkadaşınla saatlerce tartışacağın türden bir yapım. 🌀"</p>
+    </div>
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg" alt="Parasite"></div>
+        <div><div class="volp-name">Parasite</div><div class="volp-year">2019 · Gerilim</div></div>
+      </div>
+      <p class="volp-text">"Güldürüyor, korkutuyor, düşündürüyor. Bong Joon-ho sınıf çatışmasını bu kadar eğlenceli anlatabileceğini kim bilebilirdi? Oscar'ı hak etti mi? Kesinlikle. 🏆"</p>
+    </div>
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Dark Knight"></div>
+        <div><div class="volp-name">The Dark Knight</div><div class="volp-year">2008 · Aksiyon</div></div>
+      </div>
+      <p class="volp-text">"Heath Ledger'ın Joker'i sinema tarihinin en iyi kötü adamı. Süper kahraman filmlerini sevmesen bile bu filmi izlemelisin. İzledikten sonra ne düşüneceğini bilemezsin. 🦇"</p>
+    </div>
+
+    <div class="volp-quote">
+      <div class="volp-quote-header">
+        <div class="volp-avatar">🎬</div>
+        <div class="volp-movie-poster"><img src="https://image.tmdb.org/t/p/w185/5MwkWH9tYHv3mV9OdYTMR5qreIb.jpg" alt="Eternal Sunshine"></div>
+        <div><div class="volp-name">Eternal Sunshine</div><div class="volp-year">2004 · Romantik</div></div>
+      </div>
+      <p class="volp-text">"Sevdiğin kişiyle ilgili tüm anılarını silmek ister miydin? Bu film o soruyu soruyor ve cevabı bambaşka bir yerde buluyor. Partnerinle izleyin, ama mendil hazır olsun. ❤️"</p>
+    </div>
+
   </div>
 </section>
 
@@ -563,6 +637,42 @@
   </div>
   <p class="footer-copy">© 2026 Volp. Tüm hakları saklıdır.</p>
 </footer>
+
+<script>
+  const labels = ['🧭 Keşfet', '💬 Chat', '🎬 Film Detay', '👤 Profil', '🔍 Arama', '⚙️ Filtreleme'];
+  let current = 0;
+  const track = document.getElementById('sliderTrack');
+  const dotsEl = document.getElementById('sliderDots');
+  const labelEl = document.getElementById('slideLabel');
+  const total = labels.length;
+
+  // dots oluştur
+  labels.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    labelEl.textContent = labels[current];
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function changeSlide(dir) { goTo(current + dir); }
+
+  // swipe desteği
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+</script>
 
 </body>
 </html>
